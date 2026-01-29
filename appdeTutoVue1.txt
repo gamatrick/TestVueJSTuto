@@ -1,0 +1,64 @@
+<script setup>
+  import { ref } from 'vue'
+
+
+  const name = '<span>John</span>'
+  const count= ref(0)
+  console.log(count, count.value)
+  const increment = () => count.value++
+  const decrement = () => count.value--
+  const movieName = ref('')
+  const deleteMovie = (movie) => {
+    movies.value = movies.value.filter(m => m !== movie)
+  }
+  const sortMovies = () => {
+    movies.value.sort((a, b) => a > b ? 1 : -1)
+  }
+  const addMovie = () => {
+    movies.value.push(movieName.value)
+    movieName.value = ''
+  }
+  const movies = ref([
+    'The Matrix', 
+    'Raiponce', 
+    'Cars',
+    'Star Wars'
+
+  ])
+
+  
+</script>
+
+<template>
+   
+  <h1>Hello {{ name }}</h1>
+  <h1>Hello <div v-html="name"></div></h1>
+
+  <p :id="`p-${count}`">Count: {{ count }}</p>
+  <p :style ="{color: count >= 6 ? 'green' : 'red'}">You clicked the button {{ count }} times</p>
+
+  <div v-if="count >= 6">Well done, you counted more than six times. </div>
+  <div v-else> You counted less than six times </div>
+
+  <button @click="increment">Increment</button>
+  <button @click="decrement">Decrement</button>
+  <hr>
+
+  <form action="" @submit.prevent="addMovie">
+    <input type="text" placeholder="new movie" v-model="movieName">
+    <button>Add movie</button>
+  </form>
+  <button @click="sortMovies">Sort</button>
+
+  <ul>
+    <li v-for="movie in movies" :key="movie">
+      {{ movie }} <button @click="deleteMovie(movie)">Delete</button>
+    </li>
+  </ul>
+</template>
+
+<style scoped>
+  h1 {
+    color: red;
+  }
+</style>
